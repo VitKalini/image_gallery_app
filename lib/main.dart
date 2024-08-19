@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:image_gallery_app/presentation/routes/app_router.dart';
-import 'package:image_gallery_app/presentation/viewmodels/image_gallery_viewmodel.dart';
 import 'package:image_gallery_app/presentation/views/image_gallery_view.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:stacked/stacked.dart';
 import 'package:image_gallery_app/injectable_config.dart';
+import 'package:tailwind_colors/tailwind_colors.dart';
+
+import 'core/utils/theme_util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,15 +21,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Image Gallery App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeSetup(
+        Colors.black,
+        TW3Colors.orange.shade300,
+      ).defaultThemeData,
       navigatorKey: StackedService.navigatorKey,
-      onGenerateRoute: AppRouter().onGenerateRoute,
-      home: ViewModelBuilder<ImageGalleryViewModel>.reactive(
-        viewModelBuilder: () => ImageGalleryViewModel(),
-        builder: (context, viewModel, child) => const ImageGalleryView(),
-      ),
+      home: const ImageGalleryView(),
     );
   }
 }

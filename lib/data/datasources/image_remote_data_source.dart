@@ -20,6 +20,7 @@ class ImageRemoteDataSourceImpl implements ImageRemoteDataSource {
       'q': query,
       'page': page,
       'image_type': 'photo',
+      'per_page': 100
     });
 
     final List<dynamic> jsonResponse = response.data['hits'];

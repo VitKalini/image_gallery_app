@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
 
   stacked: ^3.4.3
+  provider: ^6.0.1
   stacked_services: ^1.5.0
   http: ^1.2.2
   equatable: ^2.0.5
@@ -40,9 +41,13 @@ dependencies:
   connectivity_plus: ^6.0.3
   dio: ^5.4.3
   injectable: ^2.4.1
-
+  tailwind_colors: ^0.3.1
+  google_fonts: ^6.2.1
   cached_network_image: ^3.4.1
-  flutter_staggered_grid_view: ^0.7.0
+  lottie: ^2.2.0
+  flutter_svg: ^2.0.3
+  material_design_icons_flutter: ^7.0.7296-rc.1
+  
 
   
 
@@ -74,9 +79,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/animations/search.json
+    - assets/images/logo.svg
+    - assets/images/github-mark.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

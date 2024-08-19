@@ -1,10 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
-import 'package:image_gallery_app/presentation/viewmodels/image_gallery_viewmodel.dart';
 
 class ImagesSearchBar extends StatefulWidget {
-  const ImagesSearchBar({super.key});
+  final Function(String)? onChanged;
+  final Function()? onClearField;
+  final FocusNode? focusNode;
+
+  const ImagesSearchBar({
+    super.key,
+    this.onChanged,
+    this.onClearField,
+    this.focusNode,
+  });
 
   @override
   State<StatefulWidget> createState() => _ImagesSearchBarState();
@@ -13,36 +20,37 @@ class ImagesSearchBar extends StatefulWidget {
 class _ImagesSearchBarState extends State<ImagesSearchBar> {
   final TextEditingController _controller = TextEditingController();
   Timer? _debounce;
-
+  OutlineInputBorder borderStyle = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10.0),
+  );
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<ImageGalleryViewModel>.nonReactive(
-      viewModelBuilder: () => ImageGalleryViewModel(),
-      builder: (context, viewModel, child) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: _controller,
-            onChanged: (text) {
-              if (_debounce?.isActive ?? false) _debounce!.cancel();
-              _debounce = Timer(const Duration(milliseconds: 500), () {
-                viewModel.fetchImages(text, reset: true);
-              });
-            },
-            decoration: InputDecoration(
-              hintText: 'Search images...',
-              border: const OutlineInputBorder(),
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: () {
-                  _controller.clear();
-                  viewModel.fetchImages('', reset: true);
-                },
-              ),
-            ),
-          ),
-        );
+    return TextField(
+      focusNode: widget.focusNode,
+      controller: _controller,
+      onChanged: (value) {
+        if (_debounce?.isActive ?? false) _debounce!.cancel();
+        _debounce = Timer(const Duration(milliseconds: 500), () {
+          if (widget.onChanged != null) {
+            widget.onChanged!(value);
+          }
+        });
       },
+      decoration: InputDecoration(
+        focusedBorder: borderStyle,
+        enabledBorder: borderStyle,
+        border: borderStyle,
+        hintText: 'Search images...',
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            _controller.clear();
+            if (widget.onClearField != null) {
+              widget.onClearField!();
+            }
+          },
+        ),
+      ),
     );
   }
 
