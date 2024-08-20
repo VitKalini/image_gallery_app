@@ -4,8 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_gallery_app/presentation/views/image_detail_view.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../../../core/utils/functions.dart';
-
 class ImageTile extends StatelessWidget {
   final ImageEntity image;
 
@@ -15,26 +13,22 @@ class ImageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ImageDetailView(image: image),
-          ),
+        showDialog(
+          context: context,
+          barrierColor: Colors.black.withOpacity(0.8),
+          builder: (_) => ImageDetailView(image: image),
         );
       },
       child: Column(
         children: [
-          Hero(
-            tag: image.id,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(4.0),
-              child: CachedNetworkImage(
-                imageUrl: image.imageUrl,
-                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                height: getImageTileHeight(context),
-                fit: BoxFit.cover,
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4.0),
+            child: CachedNetworkImage(
+              imageUrl: image.imageUrl,
+              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              height: 100,
+              fit: BoxFit.cover,
             ),
           ),
           Row(
