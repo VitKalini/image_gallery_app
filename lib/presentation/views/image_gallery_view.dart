@@ -23,6 +23,11 @@ class ImageGalleryView extends StatelessWidget {
       builder: (context, viewModel, child) {
         return Scaffold(
           appBar: AppBar(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(20.0),
+              ),
+            ),
             title: const Text('Image Gallery'),
             bottom: PreferredSize(
               preferredSize: Size(MediaQuery.of(context).size.width, 48),
