@@ -72,7 +72,7 @@ class _ImageDialogState extends State<ImageDetailView> with SingleTickerProvider
                         ),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Row(
                             children: [
