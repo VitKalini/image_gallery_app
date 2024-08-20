@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Image Gallery App',
       theme: ThemeSetup(
         Colors.black,
-        TW3Colors.orange.shade300,
+        TW3Colors.blue.shade200,
       ).defaultThemeData,
       navigatorKey: StackedService.navigatorKey,
       home: const ImageGalleryView(),
