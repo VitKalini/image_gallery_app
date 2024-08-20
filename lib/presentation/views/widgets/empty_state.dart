@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class EmptyState extends StatelessWidget {
-  final Function? onSuggestedAction;
+  final void Function()? onSuggestedAction;
   final String? suggestedAction;
 
   const EmptyState({
@@ -19,14 +19,17 @@ class EmptyState extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Lottie.asset(
-              'assets/animations/search.json',
-              fit: BoxFit.contain,
+            GestureDetector(
+              onTap: onSuggestedAction,
+              child: Lottie.asset(
+                'assets/animations/search.json',
+                fit: BoxFit.contain,
+              ),
             ),
             if (suggestedAction != null && onSuggestedAction != null) const SizedBox(height: 12),
             if (suggestedAction != null && onSuggestedAction != null)
               InkWell(
-                onTap: onSuggestedAction as void Function()?,
+                onTap: onSuggestedAction,
                 child: Text(
                   suggestedAction!,
                   style: TextStyle(

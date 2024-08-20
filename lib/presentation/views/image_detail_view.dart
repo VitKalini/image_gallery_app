@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_gallery_app/core/widgets/responsive_widget.dart';
 import 'package:image_gallery_app/domain/entities/image_entity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -43,157 +44,87 @@ class _ImageDialogState extends State<ImageDetailView> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    double? dialogWidth =
+        ResponsiveWidget.isSmallScreen(context) ? null : MediaQuery.of(context).size.width * 0.6;
+
     return Dialog(
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: FadeTransition(
-          opacity: _opacityAnimation,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4.0),
-                      child: CachedNetworkImage(
-                        imageUrl: widget.image.imageUrl,
-                        placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
-                        fit: BoxFit.cover,
+      child: SizedBox(
+        width: dialogWidth,
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: FadeTransition(
+            opacity: _opacityAnimation,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4.0),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.image.imageUrl,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const SizedBox(width: 12),
-                            Icon(
-                              MdiIcons.thumbUpOutline,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              widget.image.likes.toString(),
-                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              MdiIcons.eyeOutline,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              widget.image.views.toString(),
-                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(width: 12),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const SizedBox(width: 12),
+                              Icon(
+                                MdiIcons.thumbUpOutline,
+                                size: 18,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                widget.image.likes.toString(),
+                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                MdiIcons.eyeOutline,
+                                size: 18,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                widget.image.views.toString(),
+                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(width: 12),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: IconButton(
-                  icon: Icon(MdiIcons.windowClose),
-                  color: Colors.black,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: IconButton(
+                    icon: Icon(MdiIcons.windowClose),
+                    color: Colors.black,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-// class ImageDetailView extends StatelessWidget {
-//   final ImageEntity image;
-
-//   const ImageDetailView({super.key, required this.image});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Stack(
-//       children: [
-//         Padding(
-//           padding: const EdgeInsets.all(8.0),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               ClipRRect(
-//                 borderRadius: BorderRadius.circular(4.0),
-//                 child: CachedNetworkImage(
-//                   imageUrl: image.imageUrl,
-//                   placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-//                   errorWidget: (context, url, error) => const Icon(Icons.error),
-//                   fit: BoxFit.cover,
-//                 ),
-//               ),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Row(
-//                     children: [
-//                       const SizedBox(width: 12),
-//                       Icon(
-//                         MdiIcons.thumbUpOutline,
-//                         size: 18,
-//                       ),
-//                       const SizedBox(width: 4),
-//                       Text(
-//                         image.likes.toString(),
-//                         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                         overflow: TextOverflow.ellipsis,
-//                       ),
-//                     ],
-//                   ),
-//                   Row(
-//                     children: [
-//                       Icon(
-//                         MdiIcons.eyeOutline,
-//                         size: 18,
-//                       ),
-//                       const SizedBox(width: 4),
-//                       Text(
-//                         image.views.toString(),
-//                         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                         overflow: TextOverflow.ellipsis,
-//                       ),
-//                       const SizedBox(width: 12),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//         Positioned(
-//           top: 0,
-//           right: 0,
-//           child: IconButton(
-//             icon: Icon(MdiIcons.windowClose),
-//             color: Colors.black,
-//             onPressed: () {
-//               Navigator.of(context).pop();
-//             },
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }

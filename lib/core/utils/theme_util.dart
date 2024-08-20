@@ -23,7 +23,7 @@ class ThemeSetup {
         canvasColor: Colors.white,
         textTheme: GoogleFonts.nunitoSansTextTheme(defaultTextTheme),
         primarySwatch: ThemeUtils.createMaterialColorFromShade500(primaryColor),
-        scaffoldBackgroundColor: TW3Colors.orange.shade100,
+        scaffoldBackgroundColor: TW3Colors.blue.shade100,
         primaryColor: primaryColor,
         inputDecorationTheme: InputDecorationTheme(
           focusColor: primaryColor,
